@@ -8,7 +8,7 @@ import {
 import DataTableQuery from 'components/global/datatable';
 import { Column } from 'react-table';
 import { Container } from 'components/layout';
-import HeaderPanel from 'components/global/panel/header';
+import { HeaderPanel } from 'components/global/panel/header';
 
 const FilmsPage: NextPage = () => {
   const [filters, setFilters] = React.useState<Partial<Film>>({});

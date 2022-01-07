@@ -1332,7 +1332,7 @@ export type FilmQueryVariables = Exact<{
 }>;
 
 
-export type FilmQuery = { __typename?: 'Root', film?: { __typename?: 'Film', title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined } | null | undefined };
+export type FilmQuery = { __typename?: 'Root', film?: { __typename?: 'Film', title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined, characterConnection?: { __typename?: 'FilmCharactersConnection', characters?: Array<{ __typename?: 'Person', name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined };
 
 
 export const AllFilmsDocument = `
@@ -1370,6 +1370,24 @@ export const FilmDocument = `
     episodeID
     openingCrawl
     releaseDate
+    characterConnection {
+      characters {
+        name
+        gender
+        birthYear
+        eyeColor
+        height
+        skinColor
+        mass
+        hairColor
+        homeworld {
+          name
+        }
+        species {
+          name
+        }
+      }
+    }
   }
 }
     `;

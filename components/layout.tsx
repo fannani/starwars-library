@@ -31,7 +31,7 @@ export const Container: FC = (props) => (
     p={5}
     backgroundColor="white"
     direction="column"
-    overflowX="scroll"
+    overflowX="auto"
     boxShadow="0px 12px 26px rgba(16, 30, 115, 0.06);"
     {...props}
   />

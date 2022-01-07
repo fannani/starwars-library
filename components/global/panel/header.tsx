@@ -23,7 +23,7 @@ export enum FieldType {
   TEXT = 'text',
 }
 
-const HeaderPanel = ({
+export const HeaderPanel = ({
   onSearch,
   onFilter,
   rightChild = null,
@@ -125,5 +125,3 @@ const HeaderPanel = ({
     </>
   );
 };
-
-export default HeaderPanel;

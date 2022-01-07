@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, GridItem, Divider } from '@chakra-ui/react';
+import { Text, GridItem, Divider, Box } from '@chakra-ui/react';
 
 type DetailItemProps = {
   label: string;
@@ -7,10 +7,10 @@ type DetailItemProps = {
 
 export const DetailItem: React.FC<DetailItemProps> = ({ children, label }) => (
   <>
-    <Text color="primary.500" px={8} fontWeight="bold">
+    <Text px={5} fontWeight="bold">
       {label}
     </Text>
-    <Text>{children}</Text>
+    <Box>{children}</Box>
     <GridItem colSpan={3}>
       <Divider color="neutral" />
     </GridItem>

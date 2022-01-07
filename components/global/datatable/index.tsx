@@ -22,17 +22,25 @@ import Pagination from './pagination';
 
 type DataTableQueryProps = {
   columns: Column[];
-  accessor: (data: any) => any;
+  accessor?: (data: any) => any;
   filters?: any;
   queryFunction?: any;
+  data?: any;
+  isLoading?: boolean;
+  pageSize?: number;
 };
 
 type DataTableProps = {
   columns: Column[];
   data: any;
+  pageSize?: number;
 };
 
-const DataTable = ({ columns, data }: DataTableProps) => {
+const DataTable: React.FC<DataTableProps> = ({
+  columns,
+  data,
+  pageSize = 10,
+}) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -50,6 +58,9 @@ const DataTable = ({ columns, data }: DataTableProps) => {
     {
       columns,
       data,
+      initialState: {
+        pageSize,
+      },
     },
     usePagination
   );
@@ -130,18 +141,22 @@ const filterData = (data: any, filters: any) => {
   return result;
 };
 
-const DataTableQuery = ({
+const DataTableQuery: React.FC<DataTableQueryProps> = ({
   columns,
-  queryFunction,
-  accessor,
+  queryFunction = () => ({ data: null }),
+  accessor = (data) => data,
   filters,
-}: DataTableQueryProps) => {
+  isLoading = false,
+  pageSize = 10,
+  data: preloadData,
+}) => {
   const toast = useToast();
   const [filteredData, setFilteredData] = useState<any>([]);
 
-  const { data, isLoading } = queryFunction(
+  const { data, isLoading: queryLoading } = queryFunction(
     {},
     {
+      enabled: !preloadData,
       onError: (error: any) => {
         toast({
           title: 'Error',
@@ -150,23 +165,26 @@ const DataTableQuery = ({
           duration: 3000,
           isClosable: true,
         });
-      },
-      onSuccess: (data: any) => {
-        let savedData = accessor(data);
-        if (filters) savedData = filterData(savedData, filters);
-        setFilteredData(savedData);
+        console.log(`Fetching data error: ${error.message}`);
       },
     }
   );
+  useEffect(() => {
+    if (!isLoading) {
+      let savedData = accessor(preloadData ?? data);
+      if (filters) savedData = filterData(savedData, filters);
+      setFilteredData(savedData);
+    }
+  }, [preloadData, data, isLoading]);
 
   useEffect(() => {
-    if (data) {
-      const result = filterData(accessor(data), filters);
+    if (preloadData || data) {
+      const result = filterData(accessor(preloadData ?? data), filters);
       setFilteredData(result);
     }
   }, [filters]);
 
-  if (isLoading)
+  if ((queryLoading && !data) || isLoading)
     return (
       <Stack p={5} spacing={5}>
         <Skeleton h={5} />
@@ -175,7 +193,9 @@ const DataTableQuery = ({
         <Skeleton h={5} />
       </Stack>
     );
-  return <DataTable data={filteredData} columns={columns} />;
+  return (
+    <DataTable data={filteredData} pageSize={pageSize} columns={columns} />
+  );
 };
 
 export default DataTableQuery;
