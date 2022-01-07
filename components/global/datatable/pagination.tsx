@@ -43,7 +43,7 @@ const Pagination = ({
             color: 'blue.500',
           }}
           onClick={() => previousPage()}
-          icon={<FaChevronRight />}
+          icon={<FaChevronLeft />}
         />
         {pages}
         <IconButton
@@ -57,7 +57,7 @@ const Pagination = ({
           }}
           key={pages.length + 1}
           onClick={() => nextPage()}
-          icon={<FaChevronLeft />}
+          icon={<FaChevronRight />}
         />
       </ButtonGroup>
     </Center>

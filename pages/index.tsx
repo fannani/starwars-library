@@ -23,7 +23,10 @@ const Home: NextPage = () => {
       <DataTableQuery
         columns={columns}
         queryFunction={useAllPeopleQuery}
-        accessor={(data: AllPeopleQuery) => data?.allPeople?.people}
+        accessor={(data: AllPeopleQuery) => ({
+          data: data?.allPeople?.people,
+          totalCount: data?.allPeople?.totalCount,
+        })}
       />
     </Container>
   );

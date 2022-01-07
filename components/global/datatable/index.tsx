@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -20,9 +20,14 @@ import { useTable, Column, usePagination } from 'react-table';
 import { AiOutlineInbox } from 'react-icons/ai';
 import Pagination from './pagination';
 
+type DataType = {
+  data: any;
+  totalCount: number;
+};
+
 type DataTableProps = {
   columns: Column[];
-  accessor: (data: any) => any;
+  accessor: (data: any) => DataType;
   filters?: any;
   queryFunction?: any;
 };
@@ -30,7 +35,7 @@ type DataTableProps = {
 type RenderedDataTableProps = {
   columns: Column[];
   data: any;
-  fetchData: (page: number) => void;
+  fetchData: (pageNumber: number) => void;
   pageCount: number;
 };
 
@@ -133,7 +138,10 @@ const DataTableQuery = ({
   accessor,
 }: DataTableProps) => {
   const toast = useToast();
-  const perPage = 5;
+  const perPage = 10;
+  const [activePage, setActivePage] = useState(1);
+  const [tableData, setTableData] = useState<any>([]);
+
   const { data, isLoading } = queryFunction(
     {},
     {
@@ -149,7 +157,15 @@ const DataTableQuery = ({
     }
   );
 
-  const fetchData = () => {};
+  useEffect(() => {
+    const start = (activePage - 1) * perPage;
+    const end = start + perPage;
+    setTableData(accessor(data).data.slice(start, end));
+  }, [activePage, data]);
+
+  const fetchData = (pageNumber: number) => {
+    setActivePage(pageNumber);
+  };
 
   if (isLoading)
     return (
@@ -160,12 +176,11 @@ const DataTableQuery = ({
         <Skeleton h={5} />
       </Stack>
     );
-
   return (
     <DataTable
-      data={data ? accessor(data) : []}
+      data={tableData}
       columns={columns}
-      pageCount={data ? data?.totalCount / perPage : 1}
+      pageCount={data ? Math.ceil(accessor(data).totalCount / perPage) : 1}
       fetchData={fetchData}
     />
   );
