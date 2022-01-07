@@ -20,19 +20,19 @@ import { useTable, Column, usePagination } from 'react-table';
 import { AiOutlineInbox } from 'react-icons/ai';
 import Pagination from './pagination';
 
-type DataTableProps = {
+type DataTableQueryProps = {
   columns: Column[];
   accessor: (data: any) => any;
   filters?: any;
   queryFunction?: any;
 };
 
-type RenderedDataTableProps = {
+type DataTableProps = {
   columns: Column[];
   data: any;
 };
 
-const DataTable = ({ columns, data }: RenderedDataTableProps) => {
+const DataTable = ({ columns, data }: DataTableProps) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -135,7 +135,7 @@ const DataTableQuery = ({
   queryFunction,
   accessor,
   filters,
-}: DataTableProps) => {
+}: DataTableQueryProps) => {
   const toast = useToast();
   const [filteredData, setFilteredData] = useState<any>([]);
 

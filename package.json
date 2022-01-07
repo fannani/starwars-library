@@ -1,5 +1,5 @@
 {
-  "name": "sayurbox",
+  "name": "Star Wars Library",
   "private": true,
   "scripts": {
     "dev": "next dev",

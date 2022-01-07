@@ -1325,12 +1325,14 @@ export type VehiclesEdge = {
 export type AllFilmsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllFilmsQuery = { __typename?: 'Root', allFilms?: { __typename?: 'FilmsConnection', films?: Array<{ __typename?: 'Film', title?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type AllFilmsQuery = { __typename?: 'Root', allFilms?: { __typename?: 'FilmsConnection', films?: Array<{ __typename?: 'Film', title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
-export type AllPeopleQueryVariables = Exact<{ [key: string]: never; }>;
+export type FilmQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
 
 
-export type AllPeopleQuery = { __typename?: 'Root', allPeople?: { __typename?: 'PeopleConnection', totalCount?: number | null | undefined, people?: Array<{ __typename?: 'Person', name?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type FilmQuery = { __typename?: 'Root', film?: { __typename?: 'Film', title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined } | null | undefined };
 
 
 export const AllFilmsDocument = `
@@ -1338,6 +1340,11 @@ export const AllFilmsDocument = `
   allFilms {
     films {
       title
+      director
+      producers
+      episodeID
+      openingCrawl
+      releaseDate
     }
   }
 }
@@ -1354,25 +1361,27 @@ export const useAllFilmsQuery = <
       fetcher<AllFilmsQuery, AllFilmsQueryVariables>(AllFilmsDocument, variables),
       options
     );
-export const AllPeopleDocument = `
-    query allPeople {
-  allPeople {
-    people {
-      name
-    }
-    totalCount
+export const FilmDocument = `
+    query film($id: ID!) {
+  film(id: $id) {
+    title
+    director
+    producers
+    episodeID
+    openingCrawl
+    releaseDate
   }
 }
     `;
-export const useAllPeopleQuery = <
-      TData = AllPeopleQuery,
+export const useFilmQuery = <
+      TData = FilmQuery,
       TError = unknown
     >(
-      variables?: AllPeopleQueryVariables,
-      options?: UseQueryOptions<AllPeopleQuery, TError, TData>
+      variables: FilmQueryVariables,
+      options?: UseQueryOptions<FilmQuery, TError, TData>
     ) =>
-    useQuery<AllPeopleQuery, TError, TData>(
-      variables === undefined ? ['allPeople'] : ['allPeople', variables],
-      fetcher<AllPeopleQuery, AllPeopleQueryVariables>(AllPeopleDocument, variables),
+    useQuery<FilmQuery, TError, TData>(
+      ['film', variables],
+      fetcher<FilmQuery, FilmQueryVariables>(FilmDocument, variables),
       options
     );

@@ -1,8 +1,0 @@
-query allPeople {
-  allPeople {
-    people {
-      name
-    }
-    totalCount
-  }
-}
