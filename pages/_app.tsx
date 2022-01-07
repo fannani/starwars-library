@@ -4,8 +4,13 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Layout from 'components/layout';
 import theme from 'theme';
 
-const queryClient = new QueryClient();
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>

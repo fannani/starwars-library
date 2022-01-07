@@ -20,14 +20,9 @@ import { useTable, Column, usePagination } from 'react-table';
 import { AiOutlineInbox } from 'react-icons/ai';
 import Pagination from './pagination';
 
-type DataType = {
-  data: any;
-  totalCount: number;
-};
-
 type DataTableProps = {
   columns: Column[];
-  accessor: (data: any) => DataType;
+  accessor: (data: any) => any;
   filters?: any;
   queryFunction?: any;
 };
@@ -35,16 +30,9 @@ type DataTableProps = {
 type RenderedDataTableProps = {
   columns: Column[];
   data: any;
-  fetchData: (pageNumber: number) => void;
-  pageCount: number;
 };
 
-const DataTable = ({
-  columns,
-  data,
-  fetchData,
-  pageCount,
-}: RenderedDataTableProps) => {
+const DataTable = ({ columns, data }: RenderedDataTableProps) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -53,22 +41,18 @@ const DataTable = ({
     page,
     gotoPage,
     previousPage,
+    pageOptions,
     nextPage,
     canNextPage,
     canPreviousPage,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable(
     {
       columns,
       data,
-      manualPagination: true,
-      pageCount,
     },
     usePagination
   );
-  useEffect(() => {
-    fetchData(pageIndex + 1);
-  }, [fetchData, pageIndex, pageSize]);
 
   const renderRow = useCallback(
     (row, index) => {
@@ -117,13 +101,13 @@ const DataTable = ({
           </Flex>
         )}
       </Box>
-      {pageCount > 1 && (
+      {pageOptions.length > 1 && (
         <Pagination
           gotoPage={gotoPage}
           previousPage={previousPage}
           nextPage={nextPage}
           pageIndex={pageIndex}
-          pageCount={pageCount}
+          pageCount={pageOptions.length}
           canNextPage={canNextPage}
           canPreviousPage={canPreviousPage}
         />
@@ -132,15 +116,28 @@ const DataTable = ({
   );
 };
 
+const filterData = (data: any, filters: any) => {
+  const arrayFilter = Object.entries(filters);
+  const result = data.filter((value: any) => {
+    let found = false;
+    arrayFilter.forEach((filter) => {
+      if (value[filter[0]].includes(filter[1])) {
+        found = true;
+      }
+    });
+    return found;
+  });
+  return result;
+};
+
 const DataTableQuery = ({
   columns,
   queryFunction,
   accessor,
+  filters,
 }: DataTableProps) => {
   const toast = useToast();
-  const perPage = 10;
-  const [activePage, setActivePage] = useState(1);
-  const [tableData, setTableData] = useState<any>([]);
+  const [filteredData, setFilteredData] = useState<any>([]);
 
   const { data, isLoading } = queryFunction(
     {},
@@ -154,18 +151,20 @@ const DataTableQuery = ({
           isClosable: true,
         });
       },
+      onSuccess: (data: any) => {
+        let savedData = accessor(data);
+        if (filters) savedData = filterData(savedData, filters);
+        setFilteredData(savedData);
+      },
     }
   );
 
   useEffect(() => {
-    const start = (activePage - 1) * perPage;
-    const end = start + perPage;
-    setTableData(accessor(data).data.slice(start, end));
-  }, [activePage, data]);
-
-  const fetchData = (pageNumber: number) => {
-    setActivePage(pageNumber);
-  };
+    if (data) {
+      const result = filterData(accessor(data), filters);
+      setFilteredData(result);
+    }
+  }, [filters]);
 
   if (isLoading)
     return (
@@ -176,14 +175,7 @@ const DataTableQuery = ({
         <Skeleton h={5} />
       </Stack>
     );
-  return (
-    <DataTable
-      data={tableData}
-      columns={columns}
-      pageCount={data ? Math.ceil(accessor(data).totalCount / perPage) : 1}
-      fetchData={fetchData}
-    />
-  );
+  return <DataTable data={filteredData} columns={columns} />;
 };
 
 export default DataTableQuery;

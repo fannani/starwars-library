@@ -7,6 +7,8 @@ import { Container } from 'components/layout';
 import HeaderPanel from 'components/global/panel/header';
 
 const Home: NextPage = () => {
+  const [filters, setFilters] = React.useState([]);
+
   const columns: Column[] = React.useMemo(
     () => [
       {
@@ -17,16 +19,20 @@ const Home: NextPage = () => {
     []
   );
 
+  const onSearch = (text) => {
+    setFilters({
+      name: text,
+    });
+  };
+
   return (
     <Container>
-      <HeaderPanel />
+      <HeaderPanel onSearch={onSearch} />
       <DataTableQuery
         columns={columns}
+        filters={filters}
         queryFunction={useAllPeopleQuery}
-        accessor={(data: AllPeopleQuery) => ({
-          data: data?.allPeople?.people,
-          totalCount: data?.allPeople?.totalCount,
-        })}
+        accessor={(data: AllPeopleQuery) => data?.allPeople?.people}
       />
     </Container>
   );
