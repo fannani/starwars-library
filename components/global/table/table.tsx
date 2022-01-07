@@ -20,6 +20,8 @@ export const TableRow: React.FC<TableRowProps> = React.memo(
       return (
         <chakra.tr
           ref={ref}
+          _hover={{ backgroundColor: '#efefef' }}
+          cursor="pointer"
           borderColor="rgba(16, 30, 115, 0.04)"
           borderBottomWidth={head ? 0 : 10}
           marginBottom={head ? 10 : 0}

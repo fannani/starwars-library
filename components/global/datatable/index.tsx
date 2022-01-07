@@ -28,18 +28,21 @@ type DataTableQueryProps = {
   data?: any;
   isLoading?: boolean;
   pageSize?: number;
+  onRowClick?: (data: any) => void;
 };
 
 type DataTableProps = {
   columns: Column[];
   data: any;
   pageSize?: number;
+  onRowClick?: (data: any) => void;
 };
 
 const DataTable: React.FC<DataTableProps> = ({
   columns,
   data,
   pageSize = 10,
+  onRowClick,
 }) => {
   const {
     getTableProps,
@@ -69,7 +72,10 @@ const DataTable: React.FC<DataTableProps> = ({
     (row, index) => {
       prepareRow(row);
       return (
-        <TableRow {...row.getRowProps()}>
+        <TableRow
+          onClick={() => onRowClick && onRowClick(row.original)}
+          {...row.getRowProps()}
+        >
           {row.cells.map((cell: any) => (
             <TableCell key={index} {...cell.getCellProps()}>
               {cell.render('Cell')}
@@ -149,6 +155,7 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
   isLoading = false,
   pageSize = 10,
   data: preloadData,
+  onRowClick,
 }) => {
   const toast = useToast();
   const [filteredData, setFilteredData] = useState<any>([]);
@@ -170,7 +177,7 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
     }
   );
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !queryLoading) {
       let savedData = accessor(preloadData ?? data);
       if (filters) savedData = filterData(savedData, filters);
       setFilteredData(savedData);
@@ -194,7 +201,12 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
       </Stack>
     );
   return (
-    <DataTable data={filteredData} pageSize={pageSize} columns={columns} />
+    <DataTable
+      onRowClick={onRowClick}
+      data={filteredData}
+      pageSize={pageSize}
+      columns={columns}
+    />
   );
 };
 

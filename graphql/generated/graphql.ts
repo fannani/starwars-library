@@ -1325,7 +1325,7 @@ export type VehiclesEdge = {
 export type AllFilmsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllFilmsQuery = { __typename?: 'Root', allFilms?: { __typename?: 'FilmsConnection', films?: Array<{ __typename?: 'Film', title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type AllFilmsQuery = { __typename?: 'Root', allFilms?: { __typename?: 'FilmsConnection', films?: Array<{ __typename?: 'Film', id: string, title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type FilmQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1339,6 +1339,7 @@ export const AllFilmsDocument = `
     query allFilms {
   allFilms {
     films {
+      id
       title
       director
       producers

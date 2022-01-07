@@ -44,9 +44,7 @@ const FilmDetail = () => {
             <Skeleton isLoaded={!isLoading}>{data?.film?.title} </Skeleton>
           </DetailItem>
           <DetailItem label="Release date">
-            <Skeleton isLoaded={!isLoading}>
-              {data?.film?.releaseDate}{' '}
-            </Skeleton>
+            <Skeleton isLoaded={!isLoading}>{data?.film?.releaseDate}</Skeleton>
           </DetailItem>
           <DetailItem label="Director">
             <Skeleton isLoaded={!isLoading}>{data?.film?.director} </Skeleton>
