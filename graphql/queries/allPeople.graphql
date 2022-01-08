@@ -1,6 +1,7 @@
 query allPeople {
 	allPeople {
     people {
+      id
       name
       gender
       birthYear

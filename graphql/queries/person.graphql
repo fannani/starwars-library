@@ -1,19 +1,20 @@
 query person($id: ID!) {
   person(id: $id) {
+    id
     name
-      gender
-      birthYear
-      eyeColor
-      height
-      skinColor
-      mass
-      hairColor
-      homeworld {
-        name
-      },
-      species {
-        id
-        name
-      }
+    gender
+    birthYear
+    eyeColor
+    height
+    skinColor
+    mass
+    hairColor
+    homeworld {
+      name
+    },
+    species {
+      id
+      name
+    }
   }
 }

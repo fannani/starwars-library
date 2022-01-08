@@ -20,6 +20,7 @@ const MainLayout: FC = ({ children }) => {
   return (
     <Box backgroundColor="background" w="100%" overflowX="hidden">
       <Sidebar>
+        <SidebarItem icon={FaBeer} text="Dashboard" href="/" />
         <SidebarItem icon={FaBeer} text="Films" href="/films" />
         <SidebarItem icon={FaBeer} text="Characters" href="/characters" />
       </Sidebar>

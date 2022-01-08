@@ -1330,7 +1330,7 @@ export type AllFilmsQuery = { __typename?: 'Root', allFilms?: { __typename?: 'Fi
 export type AllPeopleQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllPeopleQuery = { __typename?: 'Root', allPeople?: { __typename?: 'PeopleConnection', people?: Array<{ __typename?: 'Person', name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', id: string, name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type AllPeopleQuery = { __typename?: 'Root', allPeople?: { __typename?: 'PeopleConnection', people?: Array<{ __typename?: 'Person', id: string, name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', id: string, name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type FilmQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -1344,7 +1344,7 @@ export type PersonQueryVariables = Exact<{
 }>;
 
 
-export type PersonQuery = { __typename?: 'Root', person?: { __typename?: 'Person', name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', id: string, name?: string | null | undefined } | null | undefined } | null | undefined };
+export type PersonQuery = { __typename?: 'Root', person?: { __typename?: 'Person', id: string, name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', id: string, name?: string | null | undefined } | null | undefined } | null | undefined };
 
 
 export const AllFilmsDocument = `
@@ -1378,6 +1378,7 @@ export const AllPeopleDocument = `
     query allPeople {
   allPeople {
     people {
+      id
       name
       gender
       birthYear
@@ -1454,6 +1455,7 @@ export const useFilmQuery = <
 export const PersonDocument = `
     query person($id: ID!) {
   person(id: $id) {
+    id
     name
     gender
     birthYear
