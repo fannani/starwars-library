@@ -68,7 +68,6 @@ export const HeaderPanel = ({
             <Wrap direction="row" spacing={4}>
               {!hideSearch && (
                 <SearchInput
-                  maxW={300}
                   value={val}
                   onChange={(e) => {
                     setVal(e.target.value);
