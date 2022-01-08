@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import { useSettings } from 'utils/settings';
 
 const FilmsPage: NextPage = () => {
-  useSettings({});
+  useSettings();
   const [search, setSearch] = React.useState<Partial<Film>>({});
   const router = useRouter();
 

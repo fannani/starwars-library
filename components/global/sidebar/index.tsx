@@ -25,7 +25,7 @@ const Sidebar: FC = ({ children }) => {
     <>
       <Flex
         position="fixed"
-        display={['flex', 'none']}
+        display={['flex', 'flex', 'none']}
         background="white"
         w="100%"
         zIndex={100}
@@ -85,7 +85,7 @@ const Sidebar: FC = ({ children }) => {
         position="fixed"
         boxShadow="md"
         backgroundColor="white"
-        display={['none', 'block']}
+        display={['none', 'none', 'block']}
       >
         <Flex>
           <Flex direction="column" px={5} justify="center">

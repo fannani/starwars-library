@@ -2,7 +2,6 @@ import { extendTheme } from '@chakra-ui/react';
 
 const theme = {
   colors: {
-    logoText: '#1A274A',
     primary: {
       50: '#ffedde',
       100: '#fecdb3',
@@ -30,18 +29,6 @@ const theme = {
     neutral: '#E8E8E8',
     inputGray: '#DADADA',
     text: '#52575C',
-    orange: {
-      50: '#ffedde',
-      100: '#fecdb3',
-      200: '#f9ad85',
-      300: '#f58e56',
-      400: '#f16d28',
-      500: '#F0641A',
-      600: '#a94009',
-      700: '#792e05',
-      800: '#4a1a00',
-      900: '#1f0500',
-    },
     background: '#F6F8FB',
   },
   fonts: {

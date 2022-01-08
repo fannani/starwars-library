@@ -24,11 +24,11 @@ const MainLayout: FC = ({ children }) => {
         <SidebarItem icon={FaBeer} text="Films" href="/films" />
         <SidebarItem icon={FaBeer} text="Characters" href="/characters" />
       </Sidebar>
-      <Flex direction="column" ml={[0, 300]} minH="100vh" mt={[10, 0]}>
+      <Flex direction="column" ml={[0, 0, 300]} minH="100vh" mt={[10, 0]}>
         <Flex justify="space-between" alignItems="center" p={5}>
           <Breadcrumb
             spacing="8px"
-            display={['none', 'block']}
+            display={['none', 'none', 'block']}
             separator={<FaChevronRight />}
           >
             {breadcrumb.map((item, index) => (
@@ -49,12 +49,7 @@ const MainLayout: FC = ({ children }) => {
             ))}
           </Breadcrumb>
         </Flex>
-        <Box
-          overflowX={['scroll', 'visible']}
-          width="100%"
-          position="relative"
-          flex={1}
-        >
+        <Box overflowX="auto" width="100%" position="relative" flex={1}>
           {children}
         </Box>
       </Flex>
