@@ -7,11 +7,13 @@ type DetailItemProps = {
 
 export const DetailItem: React.FC<DetailItemProps> = ({ children, label }) => (
   <>
-    <Text px={5} fontWeight="bold">
-      {label}
-    </Text>
-    {children}
-    <GridItem colSpan={3}>
+    <GridItem>
+      <Text px={5} fontWeight="bold">
+        {label}
+      </Text>
+    </GridItem>
+    <GridItem ml="5">{children}</GridItem>
+    <GridItem colSpan={[1, 2]}>
       <Divider color="neutral" />
     </GridItem>
   </>

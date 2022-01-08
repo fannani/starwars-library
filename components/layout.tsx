@@ -8,11 +8,10 @@ import {
 } from '@chakra-ui/react';
 import Link from 'next/link';
 import SidebarItem from 'components/global/sidebar/item';
-import { FaBeer } from 'react-icons/fa';
 import Sidebar from 'components/global/sidebar';
 import { useAtom } from 'jotai';
 import { breadcrumbAtom } from 'states';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronRight, FaHome, FaFilm, FaUserAlt } from 'react-icons/fa';
 
 const MainLayout: FC = ({ children }) => {
   const [breadcrumb] = useAtom(breadcrumbAtom);
@@ -20,9 +19,9 @@ const MainLayout: FC = ({ children }) => {
   return (
     <Box backgroundColor="background" w="100%" overflowX="hidden">
       <Sidebar>
-        <SidebarItem icon={FaBeer} text="Dashboard" href="/" />
-        <SidebarItem icon={FaBeer} text="Films" href="/films" />
-        <SidebarItem icon={FaBeer} text="Characters" href="/characters" />
+        <SidebarItem icon={FaHome} text="Dashboard" href="/" />
+        <SidebarItem icon={FaFilm} text="Films" href="/films" />
+        <SidebarItem icon={FaUserAlt} text="Characters" href="/characters" />
       </Sidebar>
       <Flex direction="column" ml={[0, 0, 300]} minH="100vh" mt={[10, 0]}>
         <Flex justify="space-between" alignItems="center" p={5}>
@@ -60,7 +59,8 @@ const MainLayout: FC = ({ children }) => {
 export const Container: FC = (props) => (
   <Box
     m={5}
-    p={5}
+    px={[0, 5]}
+    py={5}
     backgroundColor="white"
     direction="column"
     overflowX="auto"

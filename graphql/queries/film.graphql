@@ -8,6 +8,7 @@ query film($id: ID!) {
     releaseDate
     characterConnection {
       characters {
+        id
         name
         gender
         birthYear

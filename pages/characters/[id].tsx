@@ -1,8 +1,6 @@
 import React from 'react';
-import { Skeleton, Heading } from '@chakra-ui/react';
-import DataTableQuery from 'components/global/datatable';
+import { Skeleton } from '@chakra-ui/react';
 import Detail, { DetailItem } from 'components/global/detail';
-import { HeaderPanel } from 'components/global/panel/header';
 import { Container } from 'components/layout';
 import { usePersonQuery } from 'graphql/generated/graphql';
 import { useRouter } from 'next/router';
@@ -49,6 +47,17 @@ const FilmDetailPage = () => {
           </DetailItem>
           <DetailItem label="Hair color">
             <Skeleton isLoaded={!isLoading}>{data?.person?.hairColor}</Skeleton>
+          </DetailItem>
+          <DetailItem label="Height">
+            <Skeleton isLoaded={!isLoading}>{data?.person?.height}</Skeleton>
+          </DetailItem>
+          <DetailItem label="Mass">
+            <Skeleton isLoaded={!isLoading}>{data?.person?.mass}</Skeleton>
+          </DetailItem>
+          <DetailItem label="Species">
+            <Skeleton isLoaded={!isLoading}>
+              {data?.person?.species?.name}
+            </Skeleton>
           </DetailItem>
         </Detail>
       </Container>

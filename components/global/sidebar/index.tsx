@@ -14,7 +14,7 @@ import {
   Text,
   Accordion,
 } from '@chakra-ui/react';
-import { FaBeer } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 const Sidebar: FC = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,7 +34,7 @@ const Sidebar: FC = ({ children }) => {
         align="center"
       >
         <IconButton
-          icon={<FaBeer />}
+          icon={<GiHamburgerMenu />}
           aria-label="Menu"
           ref={btnRef}
           size="lg"

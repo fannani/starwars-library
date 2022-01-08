@@ -46,12 +46,20 @@ const FilmDetailPage = () => {
         Cell: NumberCell,
       },
       {
-        Header: 'Namse',
+        Header: 'Name',
         accessor: 'name',
       },
       {
         Header: 'Gender',
         accessor: 'gender',
+      },
+      {
+        Header: 'Birth Year',
+        accessor: 'birthYear',
+      },
+      {
+        Header: 'Species',
+        accessor: 'species.name',
       },
     ],
     []
@@ -81,6 +89,11 @@ const FilmDetailPage = () => {
           <DetailItem label="Producers">
             <Skeleton isLoaded={!isLoading}>{data?.film?.producers} </Skeleton>
           </DetailItem>
+          <DetailItem label="Opening crawl">
+            <Skeleton isLoaded={!isLoading}>
+              {data?.film?.openingCrawl}{' '}
+            </Skeleton>
+          </DetailItem>
         </Detail>
       </Container>
       <Container>
@@ -94,10 +107,19 @@ const FilmDetailPage = () => {
             {
               name: 'gender',
               options: [
-                { value: 'all', caption: 'All' },
+                { value: 'all', caption: 'All Gender' },
                 { value: 'male', caption: 'Male' },
                 { value: 'female', caption: 'Female' },
                 { value: 'n/a', caption: 'n/a' },
+              ],
+            },
+            {
+              name: 'skinColor',
+              options: [
+                { value: 'all', caption: 'All Skin' },
+                { value: 'green', caption: 'Green' },
+                { value: 'fair', caption: 'Fair' },
+                { value: 'light', caption: 'Light' },
               ],
             },
           ]}
@@ -108,6 +130,7 @@ const FilmDetailPage = () => {
           columns={columns}
           search={search}
           filters={filters}
+          onRowClick={(data) => router.push(`/characters/${data.id}`)}
           data={data?.film?.characterConnection?.characters}
         />
       </Container>

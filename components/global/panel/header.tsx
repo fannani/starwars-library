@@ -1,6 +1,5 @@
 import SearchInput from 'components/global/input/search';
 import { Box, Button, Flex, Select, Wrap } from '@chakra-ui/react';
-import update from 'immutability-helper';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDebounce } from 'react-use';
 
@@ -65,67 +64,67 @@ export const HeaderPanel = ({
     <>
       <Box>
         <Flex direction="row" justify="space-between" m={5} flexWrap="wrap">
-          <Box display={['none', 'block']} mb={3} mr={3}>
+          <Box mb={3} mr={3} w="100%">
             <Wrap direction="row" spacing={4}>
               {!hideSearch && (
                 <SearchInput
-                  minW={300}
+                  maxW={300}
                   value={val}
                   onChange={(e) => {
                     setVal(e.target.value);
                   }}
                 />
               )}
-              <Flex
-                size="md"
-                border="0px"
-                borderRadius={20}
-                alignItems="center"
-                justifyContent="center"
-                px="2"
-                maxW={300}
-                boxShadow="0px 4px 16px rgba(16, 30, 115, 0.08)"
-              >
-                {filterOptions.map((value, i: number) => (
-                  <Select
-                    key={i}
-                    variant="unstyled"
-                    color="gray"
-                    maxW={32}
-                    ml={2}
-                    fontWeight="bold"
-                    value={filters[filterOptions[i].name]}
-                    iconSize="lg"
-                    _disabled={{ color: 'black' }}
-                    onChange={(e) => {
-                      if (e.target.value) {
-                        setFilters({
-                          ...filters,
-                          [filterOptions[i].name]: e.target.value,
-                        });
-                      }
-                    }}
-                  >
-                    {filterOptions[i]?.options?.map((value, key) => (
-                      <option
-                        key={key}
-                        value={value[filterOptions[i].valueKey ?? 'value']}
-                      >
-                        {value[filterOptions[i].captionKey ?? 'caption']}
-                      </option>
-                    ))}
-                  </Select>
-                ))}
-              </Flex>
               {filterOptions.length > 0 && (
-                <Button
-                  colorScheme="primary"
-                  color="gray"
-                  variant="outline"
-                  onClick={onReset}
-                >
-                  Reset
-                </Button>
+                <>
+                  <Flex
+                    size="md"
+                    border="0px"
+                    borderRadius={20}
+                    alignItems="center"
+                    justifyContent="center"
+                    px="2"
+                    boxShadow="0px 4px 16px rgba(16, 30, 115, 0.08)"
+                  >
+                    {filterOptions.map((value, i: number) => (
+                      <Select
+                        key={i}
+                        variant="unstyled"
+                        color="gray"
+                        w="100"
+                        ml={2}
+                        value={filters[filterOptions[i].name]}
+                        iconSize="lg"
+                        _disabled={{ color: 'black' }}
+                        onChange={(e) => {
+                          if (e.target.value) {
+                            setFilters({
+                              ...filters,
+                              [filterOptions[i].name]: e.target.value,
+                            });
+                          }
+                        }}
+                      >
+                        {filterOptions[i]?.options?.map((value, key) => (
+                          <option
+                            key={key}
+                            value={value[filterOptions[i].valueKey ?? 'value']}
+                          >
+                            {value[filterOptions[i].captionKey ?? 'caption']}
+                          </option>
+                        ))}
+                      </Select>
+                    ))}
+                  </Flex>
+                  <Button
+                    colorScheme="blue"
+                    color="gray"
+                    variant="outline"
+                    onClick={onReset}
+                  >
+                    Reset
+                  </Button>
+                </>
               )}
             </Wrap>
           </Box>

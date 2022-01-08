@@ -6,7 +6,7 @@ export { DetailItem } from './item';
 const Detail: React.FC = ({ children }) => (
   <Box p={3}>
     <Grid
-      templateColumns="auto 1fr auto"
+      templateColumns={['1fr', 'auto 1fr']}
       columnGap={12}
       rowGap={5}
       mt={5}

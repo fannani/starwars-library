@@ -8,7 +8,16 @@ import {
 } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
 
-const SearchInput = ({ onChange, value, ...props }) => (
+type SearchInputType = {
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  value: string;
+};
+
+const SearchInput: React.FC<SearchInputType> = ({
+  onChange,
+  value,
+  ...props
+}) => (
   <Box>
     <InputGroup
       size="md"

@@ -15,7 +15,13 @@ import { useRouter } from 'next/router';
 import { useSettings } from 'utils/settings';
 
 const CharactersPage: NextPage = () => {
-  useSettings();
+  useSettings({
+    breadcrumb: [
+      {
+        caption: 'Characters',
+      },
+    ],
+  });
   const [filters, setFilters] = React.useState<Partial<Person>>({});
   const [search, setSearch] = React.useState<Partial<Person>>({});
   const router = useRouter();
@@ -29,12 +35,20 @@ const CharactersPage: NextPage = () => {
         Cell: NumberCell,
       },
       {
-        Header: 'Namse',
+        Header: 'Name',
         accessor: 'name',
       },
       {
         Header: 'Gender',
         accessor: 'gender',
+      },
+      {
+        Header: 'Birth Year',
+        accessor: 'birthYear',
+      },
+      {
+        Header: 'Species',
+        accessor: 'species.name',
       },
     ],
     []
@@ -58,9 +72,19 @@ const CharactersPage: NextPage = () => {
           {
             name: 'gender',
             options: [
-              { value: 'all', caption: 'All' },
+              { value: 'all', caption: 'All Gender' },
               { value: 'male', caption: 'Male' },
               { value: 'female', caption: 'Female' },
+              { value: 'n/a', caption: 'n/a' },
+            ],
+          },
+          {
+            name: 'skinColor',
+            options: [
+              { value: 'all', caption: 'All Skin' },
+              { value: 'green', caption: 'Green' },
+              { value: 'fair', caption: 'Fair' },
+              { value: 'light', caption: 'Light' },
             ],
           },
         ]}
