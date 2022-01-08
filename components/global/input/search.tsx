@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
 
-const SearchInput = ({ onChange, ...props }) => (
+const SearchInput = ({ onChange, value, ...props }) => (
   <Box>
     <InputGroup
       size="md"
@@ -21,7 +21,12 @@ const SearchInput = ({ onChange, ...props }) => (
       <InputLeftElement pointerEvents="none">
         <Icon as={FaSearch} color="gray" />
       </InputLeftElement>
-      <Input placeholder="Search" border="0px" onChange={onChange} />
+      <Input
+        placeholder="Search"
+        border="0px"
+        onChange={onChange}
+        value={value}
+      />
     </InputGroup>
   </Box>
 );

@@ -43,11 +43,17 @@ export const HeaderPanel = ({
 
   const defaultValues = useMemo(
     () =>
-      filterOptions.reduce((map, value) => ({ ...map, [value.name]: '' }), {}),
+      filterOptions.reduce(
+        (map, value) => ({ ...map, [value.name]: 'all' }),
+        {}
+      ),
     [filterOptions]
   );
 
-  const onReset = () => setFilters(defaultValues);
+  const onReset = () => {
+    setFilters(defaultValues);
+    setVal('');
+  };
 
   useEffect(() => {
     if (onFilter) {
@@ -64,6 +70,7 @@ export const HeaderPanel = ({
               {!hideSearch && (
                 <SearchInput
                   minW={300}
+                  value={val}
                   onChange={(e) => {
                     setVal(e.target.value);
                   }}
@@ -91,15 +98,11 @@ export const HeaderPanel = ({
                     iconSize="lg"
                     _disabled={{ color: 'black' }}
                     onChange={(e) => {
-                      if (e.target.value !== 'all') {
+                      if (e.target.value) {
                         setFilters({
                           ...filters,
                           [filterOptions[i].name]: e.target.value,
                         });
-                      } else {
-                        setFilters(
-                          update(filters, { $unset: [filterOptions[i].name] })
-                        );
                       }
                     }}
                   >

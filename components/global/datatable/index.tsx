@@ -138,7 +138,8 @@ const searchData = (data: any[], filters: any[]) => {
   const arrayFilter = Object.entries(filters);
   const result = data.filter((value: any) => {
     for (const filter of arrayFilter) {
-      if (value[filter[0]].toLowerCase().includes(filter[1])) return true;
+      if (value[filter[0]].toLowerCase().includes(filter[1].toLowerCase()))
+        return true;
     }
     return false;
   });
@@ -149,7 +150,7 @@ const filterData = (data: any[], filters: any[]) => {
   const arrayFilter = Object.entries(filters);
   const result = data.filter((value: any) => {
     for (const filter of arrayFilter) {
-      if (value[filter[0]] !== filter[1]) return false;
+      if (filter[1] !== 'all' && value[filter[0]] !== filter[1]) return false;
     }
     return true;
   });

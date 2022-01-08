@@ -16,7 +16,7 @@ import { useSettings } from 'utils/settings';
 
 const FilmsPage: NextPage = () => {
   useSettings({});
-  const [filters, setFilters] = React.useState<Partial<Film>>({});
+  const [search, setSearch] = React.useState<Partial<Film>>({});
   const router = useRouter();
 
   const columns: Column[] = React.useMemo(
@@ -44,7 +44,7 @@ const FilmsPage: NextPage = () => {
   );
 
   const onSearch = (text: string) => {
-    setFilters({
+    setSearch({
       title: text,
     });
   };
@@ -54,7 +54,7 @@ const FilmsPage: NextPage = () => {
       <HeaderPanel onSearch={onSearch} />
       <DataTableQuery
         columns={columns}
-        filters={filters}
+        search={search}
         queryFunction={useAllFilmsQuery}
         accessor={(data: AllFilmsQuery) => data?.allFilms?.films}
         onRowClick={(data) => router.push(`/films/${data.id}`)}
