@@ -24,6 +24,7 @@ type DataTableQueryProps = {
   columns: Column[];
   accessor?: (data: any) => any;
   filters?: any;
+  search?: any;
   queryFunction?: any;
   data?: any;
   isLoading?: boolean;
@@ -133,16 +134,24 @@ const DataTable: React.FC<DataTableProps> = ({
   );
 };
 
+const searchData = (data: any[], filters: any[]) => {
+  const arrayFilter = Object.entries(filters);
+  const result = data.filter((value: any) => {
+    for (const filter of arrayFilter) {
+      if (value[filter[0]].toLowerCase().includes(filter[1])) return true;
+    }
+    return false;
+  });
+  return result;
+};
+
 const filterData = (data: any[], filters: any[]) => {
   const arrayFilter = Object.entries(filters);
   const result = data.filter((value: any) => {
-    let found = false;
-    arrayFilter.forEach((filter) => {
-      if (value[filter[0]].includes(filter[1])) {
-        found = true;
-      }
-    });
-    return found;
+    for (const filter of arrayFilter) {
+      if (value[filter[0]] !== filter[1]) return false;
+    }
+    return true;
   });
   return result;
 };
@@ -152,6 +161,7 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
   queryFunction = () => ({ data: null }),
   accessor = (data) => data,
   filters,
+  search,
   isLoading = false,
   pageSize = 10,
   data: preloadData,
@@ -180,20 +190,26 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
       },
     }
   );
+
+  const updateFilteredData = () => {
+    let savedData = accessor(preloadData ?? data);
+    if (search) savedData = searchData(savedData, search);
+    if (filters) savedData = filterData(savedData, filters);
+    setFilteredData(savedData);
+  };
+
   useEffect(() => {
     if (!isLoading && !queryLoading) {
-      let savedData = accessor(preloadData ?? data);
-      if (filters) savedData = filterData(savedData, filters);
-      setFilteredData(savedData);
+      updateFilteredData();
     }
   }, [preloadData, data, isLoading]);
 
   useEffect(() => {
     if (preloadData || data) {
-      const result = filterData(accessor(preloadData ?? data), filters);
-      setFilteredData(result);
+      updateFilteredData();
     }
-  }, [filters]);
+  }, [search, filters]);
+
   if (((queryLoading || isRefetching) && !preloadData) || isLoading)
     return (
       <Stack p={5} spacing={5}>

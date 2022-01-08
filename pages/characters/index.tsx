@@ -17,6 +17,7 @@ import { useSettings } from 'utils/settings';
 const CharactersPage: NextPage = () => {
   useSettings();
   const [filters, setFilters] = React.useState<Partial<Person>>({});
+  const [search, setSearch] = React.useState<Partial<Person>>({});
   const router = useRouter();
 
   const columns: Column[] = React.useMemo(
@@ -28,7 +29,7 @@ const CharactersPage: NextPage = () => {
         Cell: NumberCell,
       },
       {
-        Header: 'Name',
+        Header: 'Namse',
         accessor: 'name',
       },
       {
@@ -40,16 +41,34 @@ const CharactersPage: NextPage = () => {
   );
 
   const onSearch = (text: string) => {
-    setFilters({
+    setSearch({
       name: text,
     });
   };
+  const onFilter = (filter: Partial<Person>) => {
+    setFilters(filter);
+  };
+
   return (
     <Container>
-      <HeaderPanel onSearch={onSearch} />
+      <HeaderPanel
+        onSearch={onSearch}
+        onFilter={onFilter}
+        filters={[
+          {
+            name: 'gender',
+            options: [
+              { value: 'all', caption: 'All' },
+              { value: 'male', caption: 'Male' },
+              { value: 'female', caption: 'Female' },
+            ],
+          },
+        ]}
+      />
       <DataTableQuery
         columns={columns}
         filters={filters}
+        search={search}
         queryFunction={useAllPeopleQuery}
         accessor={(data: AllPeopleQuery) => data?.allPeople?.people}
         onRowClick={(data) => router.push(`/characters/${data.id}`)}

@@ -1,6 +1,6 @@
 import SearchInput from 'components/global/input/search';
 import { Box, Button, Flex, Select, Wrap } from '@chakra-ui/react';
-
+import update from 'immutability-helper';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDebounce } from 'react-use';
 
@@ -15,7 +15,7 @@ type HeaderPanelProps = {
   onSearch?: (value: string) => void;
   filters?: Filter[];
   rightChild?: React.ReactNode;
-  onFilter?: (filters: Filter[]) => void;
+  onFilter?: (filters: any) => void;
   hideSearch?: boolean;
 };
 
@@ -73,12 +73,15 @@ export const HeaderPanel = ({
                 size="md"
                 border="0px"
                 borderRadius={20}
+                alignItems="center"
+                justifyContent="center"
+                px="2"
                 maxW={300}
                 boxShadow="0px 4px 16px rgba(16, 30, 115, 0.08)"
               >
                 {filterOptions.map((value, i: number) => (
                   <Select
-                    key="i"
+                    key={i}
                     variant="unstyled"
                     color="gray"
                     maxW={32}
@@ -88,11 +91,15 @@ export const HeaderPanel = ({
                     iconSize="lg"
                     _disabled={{ color: 'black' }}
                     onChange={(e) => {
-                      if (e.target.value) {
+                      if (e.target.value !== 'all') {
                         setFilters({
                           ...filters,
                           [filterOptions[i].name]: e.target.value,
                         });
+                      } else {
+                        setFilters(
+                          update(filters, { $unset: [filterOptions[i].name] })
+                        );
                       }
                     }}
                   >
