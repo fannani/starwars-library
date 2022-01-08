@@ -1,0 +1,21 @@
+query allPeople {
+	allPeople {
+    people {
+      name
+      gender
+      birthYear
+      eyeColor
+      height
+      skinColor
+      mass
+      hairColor
+      homeworld {
+        name
+      },
+      species {
+        id
+        name
+      }
+    }
+  }
+}

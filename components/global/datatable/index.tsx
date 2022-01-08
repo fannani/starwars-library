@@ -133,7 +133,7 @@ const DataTable: React.FC<DataTableProps> = ({
   );
 };
 
-const filterData = (data: any, filters: any) => {
+const filterData = (data: any[], filters: any[]) => {
   const arrayFilter = Object.entries(filters);
   const result = data.filter((value: any) => {
     let found = false;
@@ -158,9 +158,13 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
   onRowClick,
 }) => {
   const toast = useToast();
-  const [filteredData, setFilteredData] = useState<any>([]);
+  const [filteredData, setFilteredData] = useState<any[]>([]);
 
-  const { data, isLoading: queryLoading } = queryFunction(
+  const {
+    data,
+    isLoading: queryLoading,
+    isRefetching,
+  } = queryFunction(
     {},
     {
       enabled: !preloadData,
@@ -190,8 +194,7 @@ const DataTableQuery: React.FC<DataTableQueryProps> = ({
       setFilteredData(result);
     }
   }, [filters]);
-
-  if ((queryLoading && !data) || isLoading)
+  if (((queryLoading || isRefetching) && !preloadData) || isLoading)
     return (
       <Stack p={5} spacing={5}>
         <Skeleton h={5} />

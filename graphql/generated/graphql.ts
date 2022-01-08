@@ -1327,12 +1327,24 @@ export type AllFilmsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllFilmsQuery = { __typename?: 'Root', allFilms?: { __typename?: 'FilmsConnection', films?: Array<{ __typename?: 'Film', id: string, title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
+export type AllPeopleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllPeopleQuery = { __typename?: 'Root', allPeople?: { __typename?: 'PeopleConnection', people?: Array<{ __typename?: 'Person', name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', id: string, name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
 export type FilmQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
 export type FilmQuery = { __typename?: 'Root', film?: { __typename?: 'Film', title?: string | null | undefined, director?: string | null | undefined, producers?: Array<string | null | undefined> | null | undefined, episodeID?: number | null | undefined, openingCrawl?: string | null | undefined, releaseDate?: string | null | undefined, characterConnection?: { __typename?: 'FilmCharactersConnection', characters?: Array<{ __typename?: 'Person', name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', name?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined } | null | undefined };
+
+export type PersonQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PersonQuery = { __typename?: 'Root', person?: { __typename?: 'Person', name?: string | null | undefined, gender?: string | null | undefined, birthYear?: string | null | undefined, eyeColor?: string | null | undefined, height?: number | null | undefined, skinColor?: string | null | undefined, mass?: number | null | undefined, hairColor?: string | null | undefined, homeworld?: { __typename?: 'Planet', name?: string | null | undefined } | null | undefined, species?: { __typename?: 'Species', id: string, name?: string | null | undefined } | null | undefined } | null | undefined };
 
 
 export const AllFilmsDocument = `
@@ -1360,6 +1372,41 @@ export const useAllFilmsQuery = <
     useQuery<AllFilmsQuery, TError, TData>(
       variables === undefined ? ['allFilms'] : ['allFilms', variables],
       fetcher<AllFilmsQuery, AllFilmsQueryVariables>(AllFilmsDocument, variables),
+      options
+    );
+export const AllPeopleDocument = `
+    query allPeople {
+  allPeople {
+    people {
+      name
+      gender
+      birthYear
+      eyeColor
+      height
+      skinColor
+      mass
+      hairColor
+      homeworld {
+        name
+      }
+      species {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+export const useAllPeopleQuery = <
+      TData = AllPeopleQuery,
+      TError = unknown
+    >(
+      variables?: AllPeopleQueryVariables,
+      options?: UseQueryOptions<AllPeopleQuery, TError, TData>
+    ) =>
+    useQuery<AllPeopleQuery, TError, TData>(
+      variables === undefined ? ['allPeople'] : ['allPeople', variables],
+      fetcher<AllPeopleQuery, AllPeopleQueryVariables>(AllPeopleDocument, variables),
       options
     );
 export const FilmDocument = `
@@ -1402,5 +1449,38 @@ export const useFilmQuery = <
     useQuery<FilmQuery, TError, TData>(
       ['film', variables],
       fetcher<FilmQuery, FilmQueryVariables>(FilmDocument, variables),
+      options
+    );
+export const PersonDocument = `
+    query person($id: ID!) {
+  person(id: $id) {
+    name
+    gender
+    birthYear
+    eyeColor
+    height
+    skinColor
+    mass
+    hairColor
+    homeworld {
+      name
+    }
+    species {
+      id
+      name
+    }
+  }
+}
+    `;
+export const usePersonQuery = <
+      TData = PersonQuery,
+      TError = unknown
+    >(
+      variables: PersonQueryVariables,
+      options?: UseQueryOptions<PersonQuery, TError, TData>
+    ) =>
+    useQuery<PersonQuery, TError, TData>(
+      ['person', variables],
+      fetcher<PersonQuery, PersonQueryVariables>(PersonDocument, variables),
       options
     );

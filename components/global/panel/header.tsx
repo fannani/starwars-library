@@ -12,10 +12,10 @@ type Filter = {
 };
 
 type HeaderPanelProps = {
-  onSearch?: (value: any) => void;
+  onSearch?: (value: string) => void;
   filters?: Filter[];
-  rightChild?: any;
-  onFilter?: any;
+  rightChild?: React.ReactNode;
+  onFilter?: (filters: Filter[]) => void;
   hideSearch?: boolean;
 };
 

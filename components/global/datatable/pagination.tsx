@@ -2,7 +2,17 @@ import React from 'react';
 import { Button, ButtonGroup, IconButton, Center } from '@chakra-ui/react';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa';
 
-const Pagination = ({
+type PaginationProps = {
+  gotoPage: (updater: number | ((pageIndex: number) => number)) => void;
+  previousPage: () => void;
+  nextPage: () => void;
+  pageIndex: number;
+  pageCount: number;
+  canNextPage: boolean;
+  canPreviousPage: boolean;
+};
+
+const Pagination: React.FC<PaginationProps> = ({
   gotoPage,
   previousPage,
   nextPage,
@@ -10,7 +20,7 @@ const Pagination = ({
   pageCount,
   canNextPage,
   canPreviousPage,
-}: any) => {
+}) => {
   const pages: React.ReactNode[] = [];
 
   for (let i = 0; i < pageCount; i += 1) {

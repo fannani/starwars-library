@@ -10,7 +10,7 @@ type SidebarItemProps = {
   href?: string;
   text: string;
   isLoaded?: boolean;
-  onClick?: any;
+  onClick?: () => void;
 };
 
 const SidebarItem: FC<SidebarItemProps> = ({
@@ -18,7 +18,7 @@ const SidebarItem: FC<SidebarItemProps> = ({
   href,
   text,
   isLoaded = true,
-  onClick = () => {},
+  onClick,
 }) => {
   const Icon = icon;
   const [activeMenu] = useAtom(activeMenuAtom);
@@ -27,13 +27,16 @@ const SidebarItem: FC<SidebarItemProps> = ({
   return (
     <Link href={href ?? '#'} onClick={onClick}>
       <Skeleton isLoaded={isLoaded}>
-        <Flex align="center" mt={5}>
-          <Icon color={isActive ? 'primary.500' : 'gray'} />
-          <Text
-            ml={3}
-            fontWeight={500}
-            color={isActive ? 'primary.500' : 'text'}
-          >
+        <Flex
+          align="center"
+          py="2"
+          px="4"
+          mt="2"
+          borderRadius="md"
+          bgColor={isActive ? 'blue.500' : 'transparent'}
+        >
+          <Icon color={isActive ? 'white' : 'gray'} />
+          <Text ml={3} fontWeight={500} color={isActive ? 'white' : 'text'}>
             {text}
           </Text>
         </Flex>

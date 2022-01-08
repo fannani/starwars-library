@@ -1,9 +1,9 @@
 import type { NextPage } from 'next';
 import React from 'react';
 import {
-  AllFilmsQuery,
-  Film,
-  useAllFilmsQuery,
+  useAllPeopleQuery,
+  AllPeopleQuery,
+  Person,
 } from 'graphql/generated/graphql';
 import DataTableQuery from 'components/global/datatable';
 import { Column } from 'react-table';
@@ -14,9 +14,9 @@ import NumberCell from 'components/global/datatable/cells/number';
 import { useRouter } from 'next/router';
 import { useSettings } from 'utils/settings';
 
-const FilmsPage: NextPage = () => {
-  useSettings({});
-  const [filters, setFilters] = React.useState<Partial<Film>>({});
+const CharactersPage: NextPage = () => {
+  useSettings();
+  const [filters, setFilters] = React.useState<Partial<Person>>({});
   const router = useRouter();
 
   const columns: Column[] = React.useMemo(
@@ -28,16 +28,12 @@ const FilmsPage: NextPage = () => {
         Cell: NumberCell,
       },
       {
-        Header: 'Title',
-        accessor: 'title',
+        Header: 'Name',
+        accessor: 'name',
       },
       {
-        Header: 'Director',
-        accessor: 'director',
-      },
-      {
-        Header: 'Release date',
-        accessor: 'releaseDate',
+        Header: 'Gender',
+        accessor: 'gender',
       },
     ],
     []
@@ -45,22 +41,21 @@ const FilmsPage: NextPage = () => {
 
   const onSearch = (text: string) => {
     setFilters({
-      title: text,
+      name: text,
     });
   };
-
   return (
     <Container>
       <HeaderPanel onSearch={onSearch} />
       <DataTableQuery
         columns={columns}
         filters={filters}
-        queryFunction={useAllFilmsQuery}
-        accessor={(data: AllFilmsQuery) => data?.allFilms?.films}
-        onRowClick={(data) => router.push(`/films/${data.id}`)}
+        queryFunction={useAllPeopleQuery}
+        accessor={(data: AllPeopleQuery) => data?.allPeople?.people}
+        onRowClick={(data) => router.push(`/characters/${data.id}`)}
       />
     </Container>
   );
 };
 
-export default FilmsPage;
+export default CharactersPage;

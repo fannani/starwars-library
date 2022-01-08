@@ -7,8 +7,17 @@ import { Container } from 'components/layout';
 import { useFilmQuery, Person } from 'graphql/generated/graphql';
 import { useRouter } from 'next/router';
 import { Column } from 'react-table';
+import { useSettings } from 'utils/settings';
 
-const FilmDetail = () => {
+const FilmDetailPage = () => {
+  const { setBreadcrumb } = useSettings({
+    breadcrumb: [
+      {
+        caption: 'Films',
+        href: '/films',
+      },
+    ],
+  });
   const router = useRouter();
   const { id } = router.query;
   const [filters, setFilters] = React.useState<Partial<Person>>({});
@@ -18,6 +27,11 @@ const FilmDetail = () => {
     },
     {
       enabled: !!id,
+      onSuccess: (value) => {
+        setBreadcrumb(1, {
+          caption: value?.film?.title ?? '',
+        });
+      },
     }
   );
 
@@ -71,4 +85,4 @@ const FilmDetail = () => {
   );
 };
 
-export default FilmDetail;
+export default FilmDetailPage;
