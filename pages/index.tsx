@@ -44,7 +44,7 @@ const Home: NextPage = () => {
           src="/star-wars.svg"
           alt="Logo star wars"
         />
-        <Text maxW={500} fontSize="md" textAlign="center">
+        <Text maxW={500} fontSize="md" textAlign="center" mx="5">
           Star Wars is an American epic space opera multimedia franchise created
           by George Lucas, which began with the eponymous 1977 film and quickly
           became a worldwide pop-culture phenomenons.
