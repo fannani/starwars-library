@@ -7,7 +7,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:jest": "jest --watch",
-    "test:cy": "cypress open",
+    "cypress": "cypress open",
+    "test:cy": "start-server-and-test start http://localhost:3000 cypress",
     "graphql:gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
@@ -51,6 +52,7 @@
     "next-router-mock": "^0.6.5",
     "prettier": "^2.5.1",
     "react-test-renderer": "^17.0.2",
+    "start-server-and-test": "^1.14.0",
     "typescript": "4.5.4"
   }
 }
