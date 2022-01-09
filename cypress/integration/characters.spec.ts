@@ -14,6 +14,7 @@ describe('Characters Page', () => {
   it('should reset input when button reset clicked', () => {
     cy.findByText(/reset/i).click();
     cy.get('input[placeholder="Search"]').should('be.empty');
+    cy.findByText('Dooku').should('not.exist');
   });
   it('should showing filtered data', () => {
     cy.get('input[placeholder="Search"]').clear();
